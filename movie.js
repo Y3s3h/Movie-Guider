@@ -1,63 +1,52 @@
-const searchform = document.querySelector('form');
-const moviecontainer = document.querySelector('.moviecontainer');
-const inputbox = document.querySelector('.inputbox');
+const searchform = document.querySelector("form");
+const moviecontainer = document.querySelector(".moviecontainer");
+const inputbox = document.querySelector(".inputbox");
 
+const getmovieinfo = async (movie) => {
+  try {
+    const myapikey = "af40a0bd";
+    const url = `http://www.omdbapi.com/?apikey=${myapikey}&t=${movie}`;
 
-const getmovieinfo = async (movie)=>{
-    try {
-        
-const myapikey ="af40a0bd";
-const url=`http://www.omdbapi.com/?apikey=${myapikey}&t=${movie}`;
+    const response = await fetch(url);
 
-const response= await fetch(url);
+    if (!response.ok) {
+      throw new Error("Unable To Fetch Data!!");
+    }
 
-if(!response.ok){
-    throw new Error("Unable To Fetch Data!!");
-}
+    const data = await response.json();
 
+    showmoviedata(data);
+  } catch (error) {
+    showerrormessage("No Movie Found!!!");
+  }
+};
 
-const data = await response.json();
+const showmoviedata = (data) => {
+  moviecontainer.innerHTML = "";
+  moviecontainer.classList.remove("nobackground");
 
-showmoviedata(data);
-} catch (error) {
-        showerrormessage("No Movie Found!!!");
-}
-}
+  const { Title, imdbRating, Genre, Released, Runtime, Actors, Plot, Poster } =
+    data;
 
+  const movieelement = document.createElement("div");
+  movieelement.classList.add("movieinfo");
 
-
-
-const showmoviedata=(data)=>{
-
- moviecontainer.innerHTML='';
- moviecontainer.classList.remove('nobackground');
-
-
-const{Title,imdbRating,Genre,Released,Runtime,Actors,Plot,Poster} =data;
-
-const movieelement = document.createElement('div');
-movieelement.classList.add('movieinfo');
-
-
-movieelement.innerHTML = `<h2>${Title}</h2>
+  movieelement.innerHTML = `<h2>${Title}</h2>
                           <p><strong>Rating:&#11088;</strong>${imdbRating}</p>`;
 
+  const moviegenreelement = document.createElement("div");
+  moviegenreelement.classList.add("moviegenre");
 
- const moviegenreelement = document.createElement('div');
- moviegenreelement.classList.add('moviegenre');
-
-
-
- Genre.split(",").forEach(element => {
-    const p = document.createElement('p');
+  Genre.split(",").forEach((element) => {
+    const p = document.createElement("p");
     p.innerText = element;
 
     moviegenreelement.appendChild(p);
- });
+  });
 
-movieelement.appendChild(moviegenreelement);
+  movieelement.appendChild(moviegenreelement);
 
-movieelement.innerHTML += `<p><strong>Released Date:</strong> ${Released}  </p>
+  movieelement.innerHTML += `<p><strong>Released Date:</strong> ${Released}  </p>
 
                         <p><strong>Duration:</strong> ${Runtime}  </p>
                         <p><strong>Cast:</strong> ${Actors}  </p>
@@ -65,41 +54,31 @@ movieelement.innerHTML += `<p><strong>Released Date:</strong> ${Released}  </p>
                         
 `;
 
+  //movie poster
+  const movieposterelement = document.createElement("div");
+  movieposterelement.classList.add("movieposter");
+  movieposterelement.innerHTML = `<img src="${Poster}"/>`;
 
-//movie poster
-const movieposterelement =document.createElement('div');
-movieposterelement.classList.add('movieposter');
-movieposterelement.innerHTML=`<img src="${Poster}"/>`;
-
-moviecontainer.appendChild(movieposterelement);
- moviecontainer.appendChild(movieelement);
-}
-
+  moviecontainer.appendChild(movieposterelement);
+  moviecontainer.appendChild(movieelement);
+};
 
 //function to display error message
 
-const showerrormessage=(message)=>{
-    moviecontainer.innerHTML=`<h2>${message} </h2>`;
-moviecontainer.classList.add('nobackground');
+const showerrormessage = (message) => {
+  moviecontainer.innerHTML = `<h2 class="error-message">${message} </h2>`;
+  moviecontainer.classList.add("nobackground");
+};
 
-}
+searchform.addEventListener("submit", (e) => {
+  e.preventDefault();
+  console.log(inputbox.value);
+  const moviename = inputbox.value.trim();
 
-
-
-
-
-
-searchform.addEventListener('submit',(e)=>{
-e.preventDefault();
-console.log(inputbox.value);
-const moviename = inputbox.value.trim();
-
-if(moviename !==''){
+  if (moviename !== "") {
     showerrormessage("Fetching Movie Details....");
-getmovieinfo(moviename);
-}
-else{
-showerrormessage("Please Enter The Valid Name.");
-}
-
+    getmovieinfo(moviename);
+  } else {
+    showerrormessage("Please Enter The Valid Name.");
+  }
 });

@@ -3,13 +3,30 @@
     padding: 0;
     box-sizing: border-box;
     font-family: Arial, Helvetica, sans-serif;
+    
 }
-body{
-    background: #bc7e7ebc;
+nav {
+    background: linear-gradient(135deg, #89f7fe, #66a6ff);
+    border-color: transparent;
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    color: #ffffff;
 }
-nav{
-color: #fff;
-background: #232f3e;
+
+.error-message {
+    color: yellow;
+  }
+  
+
+
+h1{
+    font-family: 'Poppins', sans-serif; /* Use a modern, clean font */
+    color: #1b1818;
+    font-weight: bold;
+    font-size: 28px; /* Increase text size for readability */
+    text-shadow: 3px 3px 8px rgba(0, 0, 0, 0.4); /* Add a soft shadow for depth */
+    letter-spacing: 1px; /* Add space between letters for a modern look */
 }
 
 .navbar{
@@ -28,14 +45,20 @@ font-size: 18px;
 }
 
 .searchcontainer input{
-    border-radius: 3px 0 0 3px;
+    height: 40px;
+    line-height: 30px;
+    border-radius: 10px;
+    border: none;
+    color: rgb(14, 13, 13);
     
 }
 .searchcontainer button{
-    border-radius: 0 3px 3px 0;
-    background: yellowgreen;
-    cursor: pointer;
-    transition: all 0.2s;
+    height: 40px;
+    line-height: 30px;
+    background: rgb(147 156 169);
+    border: none;
+    margin: 10px 0px;
+    border-radius: 5px;
 }
 
 .searchcontainer button:hover{
@@ -46,9 +69,14 @@ background: #ffdd45;
 
 
 main{
-    max-width: 1200px;
+    max-width: 1500px;
     margin: 0 auto;
     margin-block: 38px;
+    background: url("movie.avif");
+    background-size: cover;
+    background-position: center;
+   
+    
 }
 .moviecontainer{
     display: flex;
@@ -73,8 +101,9 @@ main{
 .movieinfo h2{
 
     text-align: center;
-    font-size: 32px;
+    font-size: 52px;
     margin: 20px 0 12px 0;
+    
 
 }
 .movieinfo h2+p{
@@ -106,11 +135,12 @@ font-weight: 700;
 
 
 
+
 main section{
     display: flex;
     justify-content: center;
     align-items: center;
-    min-height: 75vh;
+    min-height: 69vh;
 }
 .moviecontainer.nobackground{
     background: none;
@@ -126,6 +156,14 @@ footer{
     padding-block: 20px;
     margin-top: 40px;
     font-size: 20px;
+}
+footer p{
+    font-family: 'Poppins', sans-serif; 
+    color: #ebe2e2;
+    font-weight: bold;
+    font-size: 18px; 
+    text-shadow: 3px 3px 8px rgba(0, 0, 0, 0.4); 
+    letter-spacing: 1px; 
 }
 
 
